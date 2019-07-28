@@ -1,6 +1,17 @@
 require "types.base"
 
-NestedBubble = CLMBubble:new()
+NestedBubble = {}
+NestedBubble.__index = NestedBubble
+setmetatable(NestedBubble, CLMBubble)
+
+--- Create a bubble whose latent variables are a table or
+-- set of nested tables.
+function NestedBubble:new(latvars)
+  local nestedBubble = CLMBubble:new(latvars)
+  setmetatable(nestedBubble, NestedBubble)
+
+  return nestedBubble
+end
 
 --- In place, add each value from source to each value in
 -- target.  Both can be assumed to have the same structure
@@ -18,6 +29,7 @@ function sumtables(target, source)
     else
       target[key] = target[key] + source[key]
     end
+  end
 end
 
 --- In place, multiply each value from the target by the
@@ -37,6 +49,7 @@ function multables(target, source)
     else
       target[key] = target[key] * source[key]
     end
+  end
 end
 
 --- Make a deep copy of the given set of latent variables.

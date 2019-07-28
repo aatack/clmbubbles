@@ -1,9 +1,11 @@
 CLMBubble = {}
+CLMBubble.__index = CLMBubble
 
+--- Define the functions required for a continuous loss
+-- minimised bubble to operate.
 function CLMBubble:new(latvars)
   local clmbubble = {}
   setmetatable(clmbubble, CLMBubble)
-  self.__index = self
 
   if type(latvars) ~= "table" then
     error("latent variables must be a table")
