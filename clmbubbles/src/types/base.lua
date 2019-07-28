@@ -41,14 +41,14 @@ end
 --- Calculate the second derivative of each of the latent
 -- variables as a function of their current values, the
 -- resulting loss, and their first derivatives.
-function CLMBubbles:curve(latvers, loss, slope)
+function CLMBubble:curve(latvers, loss, slope)
   error("curve not yet implemented")
 end
 
 --- In place, add each value from source to each value in
 -- target.  Both can be assumed to have the same structure
 -- as the bubble's latent variables.
-function CLMBubbles:latsum(target, source)
+function CLMBubble:latsum(target, source)
   error("latsum not yet implemented")
 end
 
