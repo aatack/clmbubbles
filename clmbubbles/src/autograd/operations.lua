@@ -37,19 +37,41 @@ function difference(x, y)
 end
 
 --- Represent the product of two expressions.
-function product(x, y)
+function product(u, v)
   local p = {}
 
   function p:evaluate(source)
-    return x:evaluate(source) * y:evaluate(source)
+    return u:evaluate(source) * v:evaluate(source)
   end
 
   function p:derivative(withrespectto)
     return sum(
-      product(x:derivative(withrespectto), y),
-      product(y:derivative(withrespectto), x)
+      product(u:derivative(withrespectto), v),
+      product(v:derivative(withrespectto), u)
     )
   end
 
   return p
+end
+
+--- Represent the division of the former expression by
+-- the latter as an expression.
+function quotient(u, v)
+  local q = {}
+
+  function q:evaluate(source)
+    return u:evaluate(source) / v:evaluate(source)
+  end
+
+  function q:derivative(withrespectto)
+    return quotient(
+      difference(
+        product(u:derivative(withrespectto), v),
+        product(v:derivative(withrespectto), u)
+      ),
+      product(v, v)
+    )
+  end
+
+  return q
 end
