@@ -17,8 +17,8 @@ function pointer(location)
 
   --- Return the derivative of the pointer's value with
   -- respect to some other value.
-  function p:derivative(withrespectto)
-    if self == withrespectto then
+  function p:derivative(wrt)
+    if self == wrt then
       return one
     else
       return zero

@@ -7,10 +7,10 @@ function sum(x, y)
     return x:evaluate(source) + y:evaluate(source)
   end
 
-  function s:derivative(withrespectto)
+  function s:derivative(wrt)
     return sum(
-      x:derivative(withrespectto),
-      y:derivative(withrespectto)
+      x:derivative(wrt),
+      y:derivative(wrt)
     )
   end
 
@@ -26,10 +26,10 @@ function difference(x, y)
     return x:evaluate(source) - y:evaluate(source)
   end
 
-  function d:derivative(withrespectto)
+  function d:derivative(wrt)
     return difference(
-      x:derivative(withrespectto),
-      y:derivative(withrespectto)
+      x:derivative(wrt),
+      y:derivative(wrt)
     )
   end
 
@@ -44,10 +44,10 @@ function product(u, v)
     return u:evaluate(source) * v:evaluate(source)
   end
 
-  function p:derivative(withrespectto)
+  function p:derivative(wrt)
     return sum(
-      product(u:derivative(withrespectto), v),
-      product(v:derivative(withrespectto), u)
+      product(u:derivative(wrt), v),
+      product(v:derivative(wrt), u)
     )
   end
 
@@ -63,11 +63,11 @@ function quotient(u, v)
     return u:evaluate(source) / v:evaluate(source)
   end
 
-  function q:derivative(withrespectto)
+  function q:derivative(wrt)
     return quotient(
       difference(
-        product(u:derivative(withrespectto), v),
-        product(v:derivative(withrespectto), u)
+        product(u:derivative(wrt), v),
+        product(v:derivative(wrt), u)
       ),
       product(v, v)
     )
