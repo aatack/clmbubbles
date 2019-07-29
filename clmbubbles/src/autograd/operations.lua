@@ -35,3 +35,21 @@ function difference(x, y)
 
   return d
 end
+
+--- Represent the product of two expressions.
+function product(x, y)
+  local p = {}
+
+  function p:evaluate(source)
+    return x:evaluate(source) * y:evaluate(source)
+  end
+
+  function p:derivative(withrespectto)
+    return sum(
+      product(x:derivative(withrespectto), y),
+      product(y:derivative(withrespectto), x)
+    )
+  end
+
+  return p
+end
