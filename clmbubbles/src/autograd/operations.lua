@@ -38,6 +38,21 @@ function difference(x, y)
   return d
 end
 
+--- Multiply an expression by a constant.
+function constantproduct(expression, constant)
+  local cp = {}
+
+  function cp:evaluate(source)
+    return constant * expression:evaluate(source)
+  end
+
+  function cp:derivative(wrt)
+    return constantproduct(expression:derivative(wrt), constant)
+  end
+
+  return cp
+end
+
 --- Represent the product of two expressions.
 function product(u, v)
   local p = {}
@@ -59,7 +74,6 @@ end
 --- Represent the square of an expression.
 function square(x)
   local s = {}
-  local two = constant(2)
 
   function s:evaluate(source)
     local _x = x:evaluate(source)
@@ -67,7 +81,7 @@ function square(x)
   end
 
   function s:derivative(wrt)
-    return product(x:derivative(wrt), two)
+    return constantproduct(x:derivative(wrt), 2)
   end
 
   return s
