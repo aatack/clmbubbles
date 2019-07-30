@@ -1,3 +1,5 @@
+require "autograd.atomic"
+
 --- Return an expression representing the sum of two
 -- other expressions.
 function sum(x, y)
@@ -54,6 +56,23 @@ function product(u, v)
   return p
 end
 
+--- Represent the square of an expression.
+function square(x)
+  local s = {}
+  local two = constant(2)
+
+  function s:evaluate(source)
+    local _x = x:evaluate(source)
+    return _x * _x
+  end
+
+  function s:derivative(wrt)
+    return product(x:derivative(wrt), two)
+  end
+
+  return s
+end
+
 --- Represent the division of the former expression by
 -- the latter as an expression.
 function quotient(u, v)
@@ -69,7 +88,7 @@ function quotient(u, v)
         product(u:derivative(wrt), v),
         product(v:derivative(wrt), u)
       ),
-      product(v, v)
+      square(v)
     )
   end
 
