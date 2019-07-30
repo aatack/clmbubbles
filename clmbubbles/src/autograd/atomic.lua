@@ -46,3 +46,18 @@ function constant(x)
 
   return c
 end
+
+--- Return the negation of an expression.
+function negate(x)
+  local n = {}
+
+  function n:evaluate(source)
+    return -x:evaluate(source)
+  end
+
+  function n:derivative(wrt)
+    return negate(x:derivative(wrt))
+  end
+
+  return n
+end

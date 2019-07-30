@@ -108,3 +108,35 @@ function quotient(u, v)
 
   return q
 end
+
+--- Return an expression for the reciprocal of
+-- a value.
+function reciprocal(x)
+  local r = {}
+
+  function r:evaluate(source)
+    return 1 / x:evaluate(source)
+  end
+
+  function r:derivative(wrt)
+    return negate(square(self))
+  end
+
+  return r
+end
+
+--- Return an expression for the natural logarithm
+-- of an input expression.
+function ln(x)
+  local l = {}
+
+  function l:evaluate(source)
+    return math.log(x:evaluate(source))
+  end
+
+  function l:derivative(source)
+    return reciprocal(x)
+  end
+
+  return l
+end
