@@ -1,13 +1,13 @@
-require "types.base"
+require "bubbles.bubble"
 
 NestedBubble = {}
 NestedBubble.__index = NestedBubble
-setmetatable(NestedBubble, CLMBubble)
+setmetatable(NestedBubble, Bubble)
 
 --- Create a bubble whose latent variables are a table or
 -- set of nested tables.
 function NestedBubble:new(latvars)
-  local nestedBubble = CLMBubble:new(latvars)
+  local nestedBubble = Bubble:new(latvars)
   setmetatable(nestedBubble, NestedBubble)
 
   return nestedBubble
