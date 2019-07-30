@@ -1,11 +1,29 @@
 require "util.strings"
 require "util.functional"
 
+Expression = {}
+
+--- Return an empty expression.
+function _expression()
+  local e = {}
+  setmetatable(e, Expression)
+  return e
+end
+
+--- Determine whether or not the given table is an expression.
+function isexpression(candidate)
+  if type(candidate) ~= "table" then
+    return false
+  else
+    return getmetatable(candidate) == Expression
+  end
+end
+
 --- Return an expression that picks a specific value from
 -- its source table.
 function pointer(location)
-  local p = { path = splitstring(location, ".") }
-  local index = nestedindexlambda(p.path)
+  local p = _expression()
+  local index = nestedindexlambda(splitstring(location, "."))
 
   local one = constant(1)
   local zero = constant(0)
@@ -30,7 +48,7 @@ end
 
 --- Return an expression describing a constant value.
 function constant(x)
-  local c = {}
+  local c = _expression()
 
   --- Evaluate the constant.
   function c:evaluate(_)
@@ -49,7 +67,7 @@ end
 
 --- Return the negation of an expression.
 function negate(x)
-  local n = {}
+  local n = _expression()
 
   function n:evaluate(source)
     return -x:evaluate(source)
@@ -65,7 +83,7 @@ end
 --- Return an expression representing the value of
 -- another expression subtracted from one.
 function subfromone(p)
-  local s = {}
+  local s = _expression()
 
   function s:evaluate(source)
     return 1 - p:evaluate(source)

@@ -3,7 +3,7 @@ require "autograd.atomic"
 --- Return an expression representing the sum of two
 -- other expressions.
 function sum(x, y)
-  local s = {}
+  local s = _expression()
 
   function s:evaluate(source)
     return x:evaluate(source) + y:evaluate(source)
@@ -22,7 +22,7 @@ end
 --- Calculate the result of subtracting the latter
 -- expression from the former.
 function difference(x, y)
-  local d = {}
+  local d = _expression()
 
   function d:evaluate(source)
     return x:evaluate(source) - y:evaluate(source)
@@ -40,7 +40,7 @@ end
 
 --- Multiply an expression by a constant.
 function constantproduct(expression, constant)
-  local cp = {}
+  local cp = _expression()
 
   function cp:evaluate(source)
     return constant * expression:evaluate(source)
@@ -55,7 +55,7 @@ end
 
 --- Represent the product of two expressions.
 function product(u, v)
-  local p = {}
+  local p = _expression()
 
   function p:evaluate(source)
     return u:evaluate(source) * v:evaluate(source)
@@ -73,7 +73,7 @@ end
 
 --- Represent the square of an expression.
 function square(x)
-  local s = {}
+  local s = _expression()
 
   function s:evaluate(source)
     local _x = x:evaluate(source)
@@ -90,7 +90,7 @@ end
 --- Represent the division of the former expression by
 -- the latter as an expression.
 function quotient(u, v)
-  local q = {}
+  local q = _expression()
 
   function q:evaluate(source)
     return u:evaluate(source) / v:evaluate(source)
@@ -112,7 +112,7 @@ end
 --- Return an expression for the reciprocal of
 -- a value.
 function reciprocal(x)
-  local r = {}
+  local r = _expression()
 
   function r:evaluate(source)
     return 1 / x:evaluate(source)
@@ -128,7 +128,7 @@ end
 --- Return an expression for the natural logarithm
 -- of an input expression.
 function ln(x)
-  local l = {}
+  local l = _expression()
 
   function l:evaluate(source)
     return math.log(x:evaluate(source))
