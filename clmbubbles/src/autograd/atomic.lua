@@ -61,3 +61,19 @@ function negate(x)
 
   return n
 end
+
+--- Return an expression representing the value of
+-- another expression subtracted from one.
+function subfromone(p)
+  local s = {}
+
+  function s:evaluate(source)
+    return 1 - p:evaluate(source)
+  end
+
+  function derivative(wrt)
+    return negate(p:derivative(wrt))
+  end
+
+  return s
+end
