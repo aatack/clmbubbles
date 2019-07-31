@@ -7,10 +7,10 @@ setmetatable(NestedBubble, Bubble)
 --- Create a bubble whose latent variables are a table or
 -- set of nested tables.
 function NestedBubble:new(latvars)
-  local nestedBubble = Bubble:new(latvars)
-  setmetatable(nestedBubble, NestedBubble)
+  local nestedbubble = Bubble:new(latvars)
+  setmetatable(nestedbubble, NestedBubble)
 
-  return nestedBubble
+  return nestedbubble
 end
 
 --- In place, add each value from source to each value in
