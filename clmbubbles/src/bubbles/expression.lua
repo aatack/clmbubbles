@@ -1,4 +1,6 @@
 require "bubbles.nested"
+require "autograd.atomic"
+require "util.functional"
 
 ExpressionBubble = {}
 ExpressionBubble.__index = ExpressionBubble
@@ -12,10 +14,28 @@ function ExpressionBubble:new(latvars, lossexpression)
 
   expressionbubble._loss = lossexpression
 
+  expressionbubble._slope = conditionalmap(
+    isexpression,
+    function (var)
+      return expressionbubble._loss:derivative(var)
+    end,
+    pointersfor(expressionbubble.latvars.value)
+  )
+
   return expressionbubble
 end
 
 --- Evaluate the loss expression on the given latent variables.
 function ExpressionBubble:loss(latvars)
   return self._loss:evaluate(latvars)
+end
+
+function ExpressionBubble:slope(latvars, _)
+  return conditionalmap(
+    isexpression,
+    function (var)
+      return var:evaluate(latvars)
+    end,
+    self._slope
+  )
 end

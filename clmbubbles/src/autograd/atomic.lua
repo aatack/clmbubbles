@@ -46,6 +46,25 @@ function pointer(location)
   return p
 end
 
+--- Return a nested table of pointers, with the same structure
+-- as the input nested table, where each leaf is a pointer pointing
+-- to its own location within the table.
+function pointersfor(nestedtable, currentpath)
+  if type(nestedtable) ~= "table" then
+    if currentpath == nil or string.len(currentpath) == 0 then
+      error("first input to pointersfor must be a table")
+    end
+    return pointer(string.sub(currentpath, 1, string.len(currentpath) - 1))
+  else
+    local path = currentpath or ""
+    local result = {}
+    for key, value in pairs(nestedtable) do
+      result[key] = pointersfor(value, path .. key .. ".")
+    end
+    return result
+  end
+end
+
 --- Return an expression describing a constant value.
 function constant(x)
   local c = _expression()
