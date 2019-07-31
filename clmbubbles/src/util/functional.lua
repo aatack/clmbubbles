@@ -58,7 +58,7 @@ end
 --- Map a table, applying a lambda to values which either satisfy
 -- the predicate or are not tables.
 function conditionalmap(predicate, lambda, value)
-  if type(v) ~= "table" or predicate(v) then
+  if type(value) ~= "table" or predicate(value) then
     return lambda(value)
   else
     local result = {}
