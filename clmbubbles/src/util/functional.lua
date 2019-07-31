@@ -40,3 +40,31 @@ end
 function identity(x)
   return x
 end
+
+--- Map the leaf elements of a table according to some
+-- transfer function while maintaining its overall value.
+function maptable(lambda, value)
+  if type(value) == "table" then
+    local result = {}
+    for key, _value in pairs(value) do
+      result[key] = maptable(lamda, _value)
+    end
+    return result
+  else
+    return lambda(value)
+  end
+end
+
+--- Map a table, applying a lambda to values which either satisfy
+-- the predicate or are not tables.
+function conditionalmap(predicate, lambda, value)
+  if type(v) ~= "table" or predicate(v) then
+    return lambda(value)
+  else
+    local result = {}
+    for key, _value in pairs(value) do
+      result[key] = conditionalmap(predicate, lambda, _value)
+    end
+    return result
+  end
+end
