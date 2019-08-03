@@ -14,7 +14,7 @@ function Wrapper:new(bubble, starttime, limit)
 end
 
 --- Advance the wrapper by the given time.
-function Wrapper:advance(deltatime)
+function Wrapper:update(deltatime)
   if self.time > self.limit then
     local shift = self.limit + self.time
     self.time = self.time - shift
