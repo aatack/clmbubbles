@@ -20,6 +20,5 @@ end
 --- Draw the bubble through the given camera.
 function Wrapper:draw(camera)
   self.bubble, todraw = self.bubble:extrapolate(self.time)
-  print(todraw.position)
   todraw:draw(camera)
 end
