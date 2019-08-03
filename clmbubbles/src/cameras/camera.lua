@@ -83,3 +83,13 @@ function Camera:line(points)
   end
   love.graphics.line(coordinates)
 end
+
+function Camera:polygon(mode, points)
+  local coordinates = {}
+  for _, point in ipairs(points) do
+    local transformed = self:transformpoint(point)
+    table.insert(coordinates, transformed.x)
+    table.insert(coordinates, transformed.y)
+  end
+  love.graphics.polygon(mode, coordinates)
+end

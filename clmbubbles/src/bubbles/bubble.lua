@@ -64,9 +64,7 @@ end
 -- bubble the function is called on, but if a discontinuity is
 -- crossed then a different bubble will be returned.  This
 -- function has undefined behaviour if the passed time is less
--- than the bubble's measured time.  If the _time() function is
--- expensive to compute, it can sometimes save time to carry this
--- over to the second output manually.
+-- than the bubble's measured time.
 function Bubble:extrapolate(time)
   if time >= self:time() then
     return self:result():extrapolate(time)
