@@ -15,13 +15,15 @@ function Bubble:new(measuredtime)
 end
 
 --- Calculate and return the time at which this bubble's next
--- discontinuity occurs.
+-- discontinuity occurs.  Return `math.huge` if there is no
+-- foreseeable discontinuity.
 function Bubble:_time()
   error("Bubble:_time has not been implemented")
 end
 
 --- Calculate and return the state of this bubble immediately
--- after the next discontinuity.
+-- after the next discontinuity.  The `measuredtime` field of the
+-- result should equal the `discontinuity.time` field of this bubble.
 function Bubble:_result()
   error("Bubble:_result has not been implemented")
 end
@@ -31,6 +33,12 @@ end
 -- been extrapolated to the given time.
 function Bubble:_extrapolate(time)
   error("Bubble:_extrapolate has not been implemented")
+end
+
+--- Return a new bubble whose values are unchanged but whose
+-- measured time has been shifted backwards by the given amount.
+function Bubble:rebase(delta)
+  error("Bubble:rebase has not been implemented")
 end
 
 --- Get the time at which this bubble's next discontinuity occurs.
@@ -64,4 +72,10 @@ function Bubble:extrapolate(time)
   else
     return self, self:_extrapolate(time)
   end
+end
+
+--- Draw the bubble using the given transform to transfer points
+-- from the global frame into the camera frame.
+function Bubble:draw(transform)
+  -- Does nothing by default
 end
