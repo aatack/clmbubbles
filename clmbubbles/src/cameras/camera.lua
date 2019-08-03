@@ -60,7 +60,7 @@ function Camera:setfullscreen()
   local halfwidth = love.graphics.getWidth() / 2
   local halfheight = love.graphics.getHeight() / 2
 
-  self.world.domensions.y = (widthworld / 2) * (halfheight / halfwidth)
+  self.world.dimensions.y = (widthworld / 2) * (halfheight / halfwidth)
   self.screen.centre = {x = halfwidth, y = halfheight}
   self.screen.dimensions = {x = halfwidth, y = halfheight}
 end
@@ -72,4 +72,14 @@ function Camera:circle(mode, centre, radius)
   love.graphics.circle(
     mode, transformed.x, transformed.y, self:transformdistance(radius)
   )
+end
+
+function Camera:line(points)
+  local coordinates = {}
+  for _, point in ipairs(points) do
+    local transformed = self:transformpoint(point)
+    table.insert(coordinates, transformed.x)
+    table.insert(coordinates, transformed.y)
+  end
+  love.graphics.line(coordinates)
 end
