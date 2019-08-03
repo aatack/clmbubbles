@@ -66,15 +66,14 @@ end
 -- function has undefined behaviour if the passed time is less
 -- than the bubble's measured time.
 function Bubble:extrapolate(time)
-  if time >= self:gettime() then
-    return self:getresult():extrapolate(time)
+  if time >= self:time() then
+    return self:result():extrapolate(time)
   else
     return self, self:_extrapolate(time)
   end
 end
 
---- Draw the bubble using the given transform to transfer points
--- from the global frame into the camera frame.
-function Bubble:draw(transform)
+--- Draw the bubble using the given camera.
+function Bubble:draw(camera)
   -- Does nothing by default
 end
