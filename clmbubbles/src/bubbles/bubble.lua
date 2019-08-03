@@ -8,8 +8,7 @@ function Bubble:new(measuredtime)
 
   bubble.measuredtime = measuredtime
 
-  bubble.discontinuity.time = nil
-  bubble.discontinuity.result = nil
+  bubble.discontinuity = {time = nil, result = nil}
 
   return bubble
 end
