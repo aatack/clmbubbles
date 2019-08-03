@@ -14,12 +14,12 @@ function Independent:new(measuredtime, value, slope, curve, upperbound)
   if slope ~= nil then
     independent.functions.slope = slope
   else
-    independent.functions.slope = derivative(independent.functions.value)
+    independent.functions.slope = _derivative(independent.functions.value)
   end
   if curve ~= nil then
     independent.functions.curve = curve
   else
-    independent.functions.curve = derivative(independent.functions.slope)
+    independent.functions.curve = _derivative(independent.functions.slope)
   end
 
   independent.upperbound = upperbound or math.huge
@@ -69,7 +69,7 @@ end
 -- measured time has been shifted backwards by the given amount.
 function Independent:rebase(delta)
   local rebase = function(f)
-    return function(t) return f(t - delta) end end
+    return function(t) return f(t + delta) end
   end
   local functions = self.functions
 
@@ -80,4 +80,13 @@ function Independent:rebase(delta)
     rebase(functions.curve),
     self.upperbound - delta
   )
+end
+
+--- Return a first-order numerical estimation of the function's
+-- derivative with respect to its sole argument.
+function _derivative(lambda, epsilon)
+  local epsilon = epsilon or 0.00001
+  return function(t)
+    return (lambda(t + epsilon) - lambda(t - epsilon)) / (2 * epsilon)
+  end
 end
