@@ -1,13 +1,13 @@
-require "bubbles.bubble"
+require "bubbles.lossy"
 
 NestedBubble = {}
 NestedBubble.__index = NestedBubble
-setmetatable(NestedBubble, Bubble)
+setmetatable(NestedBubble, LossyBubble)
 
 --- Create a bubble whose latent variables are a table or
 -- set of nested tables.
 function NestedBubble:new(latvars)
-  local nestedbubble = Bubble:new(latvars)
+  local nestedbubble = LossyBubble:new(latvars)
   setmetatable(nestedbubble, NestedBubble)
 
   return nestedbubble
