@@ -6,8 +6,11 @@ setmetatable(Variable, Bubble)
 
 --- An abstract class which stores information about how a variable's value
 -- changes as a function of time, as well as (optionally) similar data for its
--- derivatives.  The `inputs` parameter should be an array of all variables
--- upon which this variable is dependent.
+-- derivatives.  The `inputs` parameter should be a table of all variables
+-- upon which this variable is dependent.  The `valuefunction` parameter
+-- should be a function whose first argument is scalar for the time at which
+-- the value is being calculated, and whose second argument is the inputs
+-- dictionary.
 function Variable:new(
   measuredtime, inputs, valuefunction, derivativefunctions
 )
@@ -27,7 +30,7 @@ end
 --- Memoise and return the value of the variable at its measured time.
 function Variable:value()
   if self._value == nil then
-    self._value = self._valuefunction(self.measuredtime)
+    self._value = self._valuefunction(self.measuredtime, self.inputs)
   end
   return self._value
 end
@@ -53,7 +56,10 @@ end
 -- its measured time.
 function Variable:derivative(n)
   while #self._derivatives < n do
-    table.insert(self._derivatives, self:derivativefunction(n)(self.measuredtime))
+    table.insert(
+      self._derivatives,
+      self:derivativefunction(n)(self.measuredtime, self.inputs)
+    )
   end
   return self._derivatives[n]
 end
@@ -62,7 +68,10 @@ end
 -- derivative with respect to its sole argument.
 function _derivative(lambda, epsilon)
   local epsilon = epsilon or 1e-5
-  return function(t)
-    return (lambda(t + epsilon) - lambda(t - epsilon)) / (2 * epsilon)
+  return function(t, variables)
+    return (
+      (lambda(t + epsilon, variables) - lambda(t - epsilon, variables)) /
+      (2 * epsilon)
+    )
   end
 end

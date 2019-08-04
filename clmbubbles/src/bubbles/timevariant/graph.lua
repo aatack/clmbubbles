@@ -61,6 +61,7 @@ end
 --- Return a new bubble whose values are unchanged but whose
 -- measured time has been shifted backwards by the given amount.
 function Graph:rebase(delta)
+  -- TODO: write this to improve performance (ie. prevent undue copying)
   local updated = {}
   for key, variable in pairs(self.variables) do
     updated[key] = variable:rebase(delta)
