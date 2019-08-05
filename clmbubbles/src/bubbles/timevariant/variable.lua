@@ -32,3 +32,30 @@ function Variable:value()
   end
   return self._value
 end
+
+--- Calculate and return the time at which this bubble's next
+-- discontinuity occurs.  Return `math.huge` if there is no
+-- foreseeable discontinuity.
+function Variable:_time()
+  error("Variable:_time has not been implemented")
+end
+
+--- Calculate and return the state of this bubble immediately
+-- after the next discontinuity.  The `measuredtime` field of the
+-- result should equal the `discontinuity.time` field of this bubble.
+function Variable:_result()
+  error("Variable:_result has not been implemented")
+end
+
+--- Assuming the given time is between the measured and discontinuity
+-- times, return a new instance of this bubble where its values have
+-- been extrapolated to the given time.
+function Variable:_extrapolate(time)
+  error("Variable:extrpolate has not been implemented")
+end
+
+--- Return a new bubble whose values are unchanged but whose
+-- measured time has been shifted backwards by the given amount.
+function Variable:rebase(delta)
+  error("Variable:rebase has not been implemented")
+end
