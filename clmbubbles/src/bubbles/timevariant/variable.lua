@@ -11,22 +11,24 @@ setmetatable(Variable, Bubble)
 -- should be a function whose first argument is scalar for the time at which
 -- the value is being calculated, and whose second argument is the inputs
 -- dictionary.
-function Variable:new(measuredtime, lambda, inputs)
+function Variable:new(measuredtime)
   local variable = Bubble:new(measuredtime)
   setmetatable(variable, Variable)
 
-  variable._inputs = inputs or {}
-
   variable._value = nil
-  variable._lambda = lambda
 
   return variable
+end
+
+--- Return the value of the variable at a particular moment in time.
+function Variable:valuefunction(time)
+  error("Variable:valuefunction has not been implemented")
 end
 
 --- Memoise and return the value of the variable at its measured time.
 function Variable:value()
   if self._value == nil then
-    self._value = self._lambda(self.measuredtime, self.inputs)
+    self._value = self:valuefunction(self.measuredtime)
   end
   return self._value
 end
