@@ -74,6 +74,7 @@ function Camera:circle(mode, centre, radius)
   )
 end
 
+--- Draw a line from a series of points in the world space.
 function Camera:line(points)
   local coordinates = {}
   for _, point in ipairs(points) do
@@ -84,6 +85,7 @@ function Camera:line(points)
   love.graphics.line(coordinates)
 end
 
+--- Draw a polygon bounded by a series of points in the world space.
 function Camera:polygon(mode, points)
   local coordinates = {}
   for _, point in ipairs(points) do
