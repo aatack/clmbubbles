@@ -1,5 +1,6 @@
-Buffer = {}
-Buffer.__index = Buffer
+require "utils.classes"
+
+Buffer = class()
 
 --- Create a buffer, which remembers the last n values given to
 -- it as key-value pairs.
